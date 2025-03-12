@@ -5,6 +5,9 @@ import { StatusBar } from 'expo-status-bar';
 import { useFrameworkReady } from '@/hooks/useFrameworkReady';
 import { useFonts, Inter_400Regular, Inter_600SemiBold, Inter_700Bold } from '@expo-google-fonts/inter';
 import { FavoritesProvider } from '../context/FavoritesContext';
+import { PreferencesProvider } from '../context/PreferencesContext';
+import { RelaxationProvider } from '../context/RelaxationContext';
+import RelaxationNotification from '../components/RelaxationNotification';
 
 export default function RootLayout() {
   useFrameworkReady();
@@ -20,13 +23,21 @@ export default function RootLayout() {
   }
 
   return (
-    <FavoritesProvider>
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="onboarding" options={{ headerShown: false }} />
-        <Stack.Screen name="connect-device" options={{ headerShown: false }} />
-      </Stack>
-      <StatusBar style="auto" />
-    </FavoritesProvider>
+    <PreferencesProvider>
+      <FavoritesProvider>
+        <RelaxationProvider>
+          <Stack screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="onboarding" options={{ headerShown: false }} />
+            <Stack.Screen name="connect-device" options={{ headerShown: false }} />
+            <Stack.Screen name="debug" options={{ headerShown: false }} />
+            <Stack.Screen name="questionnaire" options={{ headerShown: false }} />
+            <Stack.Screen name="relaxation-moments" options={{ headerShown: false }} />
+          </Stack>
+          <RelaxationNotification />
+          <StatusBar style="auto" />
+        </RelaxationProvider>
+      </FavoritesProvider>
+    </PreferencesProvider>
   );
 }
